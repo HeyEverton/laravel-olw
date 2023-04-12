@@ -1,0 +1,40 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('sales', function (Blueprint $table) {
+            $table->id();
+            $table->string('source');
+            $table->char('status', 1);
+            $table->integer('total_amount');
+            $table->dateTime('sold_at');
+
+            $table->foreignId('client_id')->constrained();
+            $table->foreignId('seller_id')->constrained();
+
+            $table->softDeletes();
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('sales');
+    }
+};
